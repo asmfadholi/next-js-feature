@@ -1,12 +1,16 @@
 import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import styles from '../../styles/AboutMe.module.css'
 import Link from 'next/link'
 
-const detailAboutMe = [1, 2, 3, 4, 5, 6, 7, 8];
+interface IPropsAboutMe {
+    aboutMeList: number[]
+}
 
-const AboutMe = () => {
+const AboutMe = ({ aboutMeList }: IPropsAboutMe) => {
     const router = useRouter()
+
     return ( 
         <div className={styles.container}>
             <Head>
@@ -21,7 +25,7 @@ const AboutMe = () => {
             </p>
            
             <div className={styles.grid}>
-                {detailAboutMe.map(val => {
+                {aboutMeList.map(val => {
                     return (
                         <Link href={`/about-me/${val}`} key={val} passHref>
                             <div className={styles.card}>
@@ -36,6 +40,19 @@ const AboutMe = () => {
             </div>
         </div>
     )
+}
+
+// automatically will be SSG
+export const getStaticProps: GetStaticProps = async () => {
+    const baseUrl = process.env.BASE_URL;
+    const res = await fetch(`${baseUrl}/api/about-me`)
+    const aboutMeList = await res.json()
+
+    return {
+      props: {
+        aboutMeList,
+      },
+    }
 }
 
 export default AboutMe
