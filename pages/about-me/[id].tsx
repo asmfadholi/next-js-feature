@@ -5,7 +5,7 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import styles from '../../styles/AboutMe.module.css'
 
 interface IPropsAboutMeDetail {
-    aboutMeDetail: { message: string; title: string, id: string }
+    aboutMeDetail?: { message?: string; title?: string, id?: string }
 }
 
 interface IParams extends ParsedUrlQuery {
@@ -13,7 +13,7 @@ interface IParams extends ParsedUrlQuery {
 }
 
 const AboutMeDetail = ({ aboutMeDetail }: IPropsAboutMeDetail) => {
-    const { title, message } = aboutMeDetail;
+    const { title = '', message = '' } = aboutMeDetail || {};
     const router = useRouter()
 
     return ( 
@@ -37,9 +37,10 @@ const AboutMeDetail = ({ aboutMeDetail }: IPropsAboutMeDetail) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const baseUrl = process.env.BASE_URL;
-    const res = await fetch(`${baseUrl}/api/about-me`)
-    const aboutMeList = await res.json()
+    // const baseUrl = process.env.BASE_URL;
+    // const res = await fetch(`${baseUrl}/api/about-me`)
+    // const aboutMeList = await res.json()
+    const aboutMeList = [1,2]
   
     // Get the paths we want to pre-render based on posts
     const paths = aboutMeList.map((about: number) => ({

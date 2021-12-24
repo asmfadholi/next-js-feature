@@ -11,6 +11,8 @@ const aboutMeDetailResponse = {
     message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 }
 
+let count = 1
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -20,7 +22,8 @@ export default function handler(
   setTimeout(() => {
     switch (method) {
       case 'GET':
-        res.status(200).json({ ...aboutMeDetailResponse, title: `About Me Page ${id}`, id })
+        res.status(200).json({ ...aboutMeDetailResponse, title: `About Me Page ${id} - ${count}`, id })
+        count++
         break
       default:
         res.setHeader('Allow', ['GET'])
